@@ -1,5 +1,5 @@
 <?php
-require('Form.php');
+require('../app/Form.php');
 use DWA\Form;
 
 $form = new Form($_GET);
@@ -13,18 +13,11 @@ $errors = false;
 
 if ($form->isSubmitted()) {
 
-  $errors = $form->validate([
-    'tab' => 'required|min:0',
-    'partySize' => 'required|min:1',
-  ]);
-
   # quantify the tab
   $tab = floatval($tab);
-
   #quantify the party size
   $partySize = intval($partySize);
-
-  # quantify the quality
+  # quantify the tipFactor (quality)
   $tipFactor = 1.18;
   if ($quality == 'bad') {
     $tipFactor = 1.14;
@@ -32,13 +25,29 @@ if ($form->isSubmitted()) {
     $tipFactor = 1.22;
   }
 
-  # calculate the amount each person owes.
-  $amount = $tab*$tipFactor/$partySize;
+  # validate the numeric data
+  $validator = Validator::make(
+    [
+      'tab' => $tab,
+      'partySize' => $partySize,
+    ],
+    [
+      'tab' => 'required|numeric|min:0',
+      'partySize' => 'required|numeric|integer|min:1',
+    ]
+  );
+  if ($validator->fails())
+  {
+    $errors = $validator->messages();
+  }
+  else {
+    $errors = false;
+    # calculate the amount each person owes.
+    $amount = $tab*$tipFactor/$partySize;
 
-  # round up if necessary
-  if ($roundUp == true) {
-    $amount = ceil($amount);
-  } else {
-    $amount = round($amount, 2);
+    # round up if necessary
+    if ($roundUp == true) {
+      $amount = ceil($amount);
+    }
   }
 }
