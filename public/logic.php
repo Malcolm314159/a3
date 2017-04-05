@@ -1,12 +1,7 @@
 <?php
 require('Form.php');
-# require('tools.php');
 use DWA\Form;
 
-# sanitize any GET Data
-# $_GET = sanitize($_GET);
-
-# instantiate a new form
 $form = new Form($_GET);
 
 # bring form values into useful variables
