@@ -58,7 +58,7 @@ class BillSplitterController extends Controller
 					'roundUp' => $roundUp,
 					'amount' => $amount,
 				];
-				return view('split', $results);
+				return view('results', $results);
 	#		}
 		}
 }
