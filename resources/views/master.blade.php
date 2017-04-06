@@ -41,7 +41,14 @@ even if the form has not been submitted -->
       <input type='submit' class='btn btn-primary' value='submit'>
     </form>
 
-		@yield('errors')
 		@yield('results')
+
+    @if(count($errors) > 0)
+    <ul class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+    @endif
 </body>
 </html>
