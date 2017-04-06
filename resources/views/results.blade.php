@@ -1,6 +1,6 @@
 @extends('master')
 @section('results')
-    <div class='alert alert-success'>
-      Each person owes <strong>${{$amount}}.</strong>
-    </div>
+<div class='alert alert-success'>
+    Each person owes <strong>${{$amount}}.</strong>
+</div>
 @endsection
